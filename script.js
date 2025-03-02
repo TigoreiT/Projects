@@ -7,7 +7,6 @@ window.onload = function () {
 	let b = '' // Второй операнд (число после операции)
 	let expressionResult = '' // Результат вычисления
 	let selectedOperation = null // Выбранная операция (+, -, x, /)
-	// let gcd = ''
 
 	// элемент экрана калькулятора
 	outputElement = document.getElementById('result') // окно вывода результата
@@ -114,6 +113,8 @@ window.onload = function () {
 	document.getElementById('btn_op_equal').onclick = function () {
 		// Проверка: если не введены оба числа (a и b) или не выбрана операция → выход
 		if (a === '' || b === '' || !selectedOperation) return
+		// Сохраняем текущую операцию перед сбросом
+		const currentOperation = selectedOperation
 		// Выполняем операцию в зависимости от selectedOperation
 		switch (selectedOperation) {
 			case 'x':
@@ -135,6 +136,19 @@ window.onload = function () {
 		a = expressionResult.toString() // Сохраняем результат
 		b = '' // Сбрасываем второе число
 		selectedOperation = null // Сбрасываем операцию
-		outputElement.innerHTML = a // Выводим результат
+		outputElement.innerHTML = a // Выводим результат}
+
+		if (currentOperation === 'gcd') {
+			const btnEqual = document.getElementById('btn_op_equal')
+			const originalColor = btnEqual.style.backgroundColor
+			let newColor =
+				'#' +
+				((expressionResult * 100) % 0xffffff).toString(16).padStart(6, '0')
+			btnEqual.style.backgroundColor = newColor
+			setTimeout(function () {
+				btnEqual.style.backgroundColor = originalColor || ''
+			}, 4000)
+			currentOperation = null
+		}
 	}
 }
