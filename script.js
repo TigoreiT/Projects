@@ -7,6 +7,7 @@ window.onload = function () {
 	let b = '' // Второй операнд (число после операции)
 	let expressionResult = '' // Результат вычисления
 	let selectedOperation = null // Выбранная операция (+, -, x, /)
+	// let gcd = ''
 
 	// элемент экрана калькулятора
 	outputElement = document.getElementById('result') // окно вывода результата
@@ -32,7 +33,15 @@ window.onload = function () {
 			}
 		}
 	}
-
+	// Функция обработки НОД
+	function gcd(x, y) {
+		// Если оба числа равны нулю, возвращаем 0 (условное значение)
+		if (x === 0 && y === 0) return 0
+		// Базовый случай: если y равно 0, возвращаем абсолютное значение x
+		if (y === 0) return Math.abs(x)
+		// Рекурсивный вызов функции
+		return gcd(y, x % y)
+	}
 	// Назначаем обработчики для всех цифровых кнопок
 	digitButtons.forEach(button => {
 		button.onclick = function () {
@@ -40,7 +49,6 @@ window.onload = function () {
 			onDigitButtonClicked(digitValue) // Передаем в обработчик
 		}
 	})
-
 	// Обработчики для кнопок операций:
 	// Умножение:
 	document.getElementById('btn_op_mult').onclick = function () {
@@ -62,7 +70,11 @@ window.onload = function () {
 		if (a === '') return // Нельзя выбрать операцию без первого числа
 		selectedOperation = '/' // Сохраняем выбранную операцию
 	}
-
+	// НОД
+	document.getElementById('btn_op_gcd').onclick = function () {
+		if (a === '') return // Если первое число не введено, ничего не делаем
+		selectedOperation = 'gcd' // Сохраняем выбранную операцию как "gcd"
+	}
 	// кнопка очищения
 	document.getElementById('btn_op_clear').onclick = function () {
 		a = '' // Сброс первого числа
@@ -71,34 +83,6 @@ window.onload = function () {
 		expressionResult = '' // Сброс результата
 		outputElement.innerHTML = 0 // Отображаем "0" на экране
 	}
-
-	// кнопка расчёта результата
-	document.getElementById('btn_op_equal').onclick = function () {
-		// Проверка: если не введены оба числа (a и b) или не выбрана операция → выход
-		if (a === '' || b === '' || !selectedOperation) return
-
-		// Выполняем операцию в зависимости от selectedOperation
-		switch (selectedOperation) {
-			case 'x':
-				expressionResult = +a * +b
-				break
-			case '+':
-				expressionResult = +a + +b
-				break
-			case '-':
-				expressionResult = +a - +b
-				break
-			case '/':
-				expressionResult = +a / +b
-				break
-		}
-
-		a = expressionResult.toString() // Сохраняем результат
-		b = '' // Сбрасываем второе число
-		selectedOperation = null // Сбрасываем операцию
-		outputElement.innerHTML = a // Выводим результат
-	}
-
 	// Кнопка Backspace
 	document.getElementById('btn_op_backspace').onclick = function () {
 		if (selectedOperation) {
@@ -109,7 +93,6 @@ window.onload = function () {
 			outputElement.innerHTML = a || '0' // Если строка пустая, показываем "0"
 		}
 	}
-
 	// Кнопка процента
 	document.getElementById('btn_op_percent').onclick = function () {
 		if (a === '') return // Если число не введено, ничего не делаем
@@ -127,54 +110,31 @@ window.onload = function () {
 			outputElement.innerHTML = a // Показываем результат
 		}
 	}
-
-	// Обработчик кнопки "НОД"
-	document.getElementById('btn_op_gcd').onclick = function () {
-		if (a === '' || b === '') return // Проверка на наличие данных
-
-		// Вычисляем НОД с помощью алгоритма Евклида
-		const gcdValue = gcd(+a, +b)
-		outputElement.innerHTML = gcdValue // Выводим результат
-
-		// Меняем цвет кнопки "="
-		const equalBtn = document.getElementById('btn_op_equal')
-		const baseColor = 0xbbab89 // Базовый цвет в DEC (12298761)
-
-		// Ограничиваем gcdVal до 0xFFFFFF - baseColor (чтобы избежать переполнения)
-		const maxAllowed = 0xffffff - baseColor
-		const safeGcdVal = Math.min(gcdValue, maxAllowed)
-
-		// Вычисляем новый цвет и форматируем в HEX
-		const newColorDecimal = baseColor + safeGcdVal
-		const newColorHex =
-			'#' + newColorDecimal.toString(16).padStart(6, '0').toUpperCase()
-
-		// Применяем цвет
-		equalBtn.style.backgroundColor = newColorHex
-
-		// Возвращаем исходный цвет через 6 секунды
-		setTimeout(() => {
-			equalBtn.style.background = '#bbab89' // Возврат к изначальному цвету
-		}, 6000)
-
-		// Сброс переменных
-		a = gcdValue.toString()
-		b = ''
-		selectedOperation = null
-	}
-
-	// Функция вычисления НОД
-	function gcd(x, y) {
-		// Проверка, если оба числа равны нулю
-		if (x === 0 && y === 0) {
-			// Математически НОД(0, 0) не определен, возвращаем 0 как условное значение
-			return 0
+	// кнопка расчёта результата
+	document.getElementById('btn_op_equal').onclick = function () {
+		// Проверка: если не введены оба числа (a и b) или не выбрана операция → выход
+		if (a === '' || b === '' || !selectedOperation) return
+		// Выполняем операцию в зависимости от selectedOperation
+		switch (selectedOperation) {
+			case 'x':
+				expressionResult = +a * +b
+				break
+			case '+':
+				expressionResult = +a + +b
+				break
+			case '-':
+				expressionResult = +a - +b
+				break
+			case '/':
+				expressionResult = +a / +b
+				break
+			case 'gcd': // Добавляем обработку НОД
+				expressionResult = gcd(+a, +b)
+				break
 		}
-		// Базовый случай: если y равен 0, возвращаем абсолютное значение x
-		if (y === 0) {
-			return Math.abs(x) // НОД всегда неотрицателен
-		}
-		// Рекурсивный шаг: вызываем функцию с новыми аргументами (y, x % y)
-		return gcd(y, x % y)
+		a = expressionResult.toString() // Сохраняем результат
+		b = '' // Сбрасываем второе число
+		selectedOperation = null // Сбрасываем операцию
+		outputElement.innerHTML = a // Выводим результат
 	}
 }
