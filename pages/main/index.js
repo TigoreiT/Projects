@@ -23,7 +23,7 @@ export class MainPage {
         return [
             {
                 id: 1,
-                src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
+                src: "https://cdn.shazoo.ru/c440x240/796178_2itKgg3_330421186c2aca9d947c93649d5ad1e604042543.jpg",
                 title: "Акция",
                 text: "Такой акции вы еще не видели 1"
             },
