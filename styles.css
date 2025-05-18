@@ -1,23 +1,25 @@
 /* Основные переменные */
 :root {
-	--bg-dark: #edebeb;
-	--bg-card: #2d2d2d;
-	--text-light: #e0e0e0;
-	--accent: #ff3b30;
-	--accent-hover: #ff5e55;
+	--bg-light: #fafafa;
+	--bg-card: #000000;
+	--bg-dark: #0f0f0f;
+	--text-light: #fafafa;
+	--text-dark: #000000;
+	--accent: #bbab89;
+	--accent-hover: #7c622b;
+	--shadow: #000000;
 }
 
 /* Общие стили */
 body.shazoo-theme {
-	background-color: var(--bg-dark);
+	background-color: var(--bg-light);
 	color: var(--text-light);
 	font-family: 'Roboto', sans-serif;
 }
 
 .shazoo-header {
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: var(--bg-dark);
 	padding: 1rem 0;
-	border-bottom: 1px solid var(--accent);
 }
 
 /* Карточки товаров (главная страница) */
@@ -31,7 +33,7 @@ body.shazoo-theme {
 
 .card:hover {
 	transform: translateY(-5px);
-	box-shadow: 0 10px 20px rgba(255, 59, 48, 0.2);
+	box-shadow: 0 10px 20px var(--shadow);
 }
 
 .card-img-top {
@@ -53,6 +55,7 @@ body.shazoo-theme {
 /* Кнопки */
 .btn-primary {
 	background-color: var(--accent);
+	color: var(--text-dark);
 	border: none;
 	border-radius: 4px;
 	padding: 8px 16px;
@@ -86,6 +89,6 @@ body.shazoo-theme {
 }
 
 /* Эффект при наведении на карточку */
-.card:hover .card-title {
+.card:hover {
 	color: var(--accent);
 }
