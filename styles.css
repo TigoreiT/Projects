@@ -1,0 +1,91 @@
+/* Основные переменные */
+:root {
+	--bg-dark: #edebeb;
+	--bg-card: #2d2d2d;
+	--text-light: #e0e0e0;
+	--accent: #ff3b30;
+	--accent-hover: #ff5e55;
+}
+
+/* Общие стили */
+body.shazoo-theme {
+	background-color: var(--bg-dark);
+	color: var(--text-light);
+	font-family: 'Roboto', sans-serif;
+}
+
+.shazoo-header {
+	background-color: rgba(0, 0, 0, 0.9);
+	padding: 1rem 0;
+	border-bottom: 1px solid var(--accent);
+}
+
+/* Карточки товаров (главная страница) */
+.card {
+	background-color: var(--bg-card);
+	border: none;
+	border-radius: 8px;
+	margin: 1rem;
+	transition: transform 0.3s;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(255, 59, 48, 0.2);
+}
+
+.card-img-top {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	height: 200px;
+	object-fit: cover;
+}
+
+.card-title {
+	color: var(--text-light);
+	font-weight: bold;
+}
+
+.card-text {
+	color: #b0b0b0;
+}
+
+/* Кнопки */
+.btn-primary {
+	background-color: var(--accent);
+	border: none;
+	border-radius: 4px;
+	padding: 8px 16px;
+}
+
+.btn-primary:hover {
+	background-color: var(--accent-hover);
+}
+
+/* Страница товара */
+.product-page {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+	.card {
+		width: 100% !important;
+		margin: 1rem 0;
+	}
+}
+
+/* Анимации */
+.card {
+	transition: all 0.3s ease;
+}
+
+.btn-primary {
+	transition: background-color 0.2s;
+}
+
+/* Эффект при наведении на карточку */
+.card:hover .card-title {
+	color: var(--accent);
+}
