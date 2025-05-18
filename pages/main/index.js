@@ -1,5 +1,6 @@
 import { ProductCardComponent } from '../../components/product-card/index.js'
 import { ProductPage } from '../product/index.js'
+import { productsData } from '../../data.js' // Добавить импорт
 
 export class MainPage {
 	constructor(parent) {
@@ -17,26 +18,7 @@ export class MainPage {
 	}
 
 	getData() {
-		return [
-			{
-				id: 1,
-				src: 'https://cdn.shazoo.ru/c440x240/796178_2itKgg3_330421186c2aca9d947c93649d5ad1e604042543.jpg',
-				title: 'Акция',
-				text: 'Такой акции вы еще не видели 1',
-			},
-			{
-				id: 2,
-				src: 'https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg',
-				title: 'Акция',
-				text: 'Такой акции вы еще не видели 2',
-			},
-			{
-				id: 3,
-				src: 'https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg',
-				title: 'Акция',
-				text: 'Такой акции вы еще не видели 3',
-			},
-		]
+		return productsData // Замена статичные данные на импортированные
 	}
 
 	render() {
@@ -52,7 +34,7 @@ export class MainPage {
 	}
 
 	clickCard(e) {
-		const cardId = e.target.dataset.id
+		const cardId = Number(e.target.dataset.id) // Преобразовать ID в число
 
 		const productPage = new ProductPage(this.parent, cardId)
 		productPage.render()

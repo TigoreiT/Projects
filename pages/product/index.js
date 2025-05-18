@@ -1,6 +1,7 @@
 import { ProductComponent } from '../../components/product/index.js'
 import { BackButtonComponent } from '../../components/back-button/index.js'
 import { MainPage } from '../main/index.js'
+import { productsData } from '../../data.js' // Добавить импорт
 
 export class ProductPage {
 	constructor(parent, id) {
@@ -9,12 +10,7 @@ export class ProductPage {
 	}
 
 	getData() {
-		return {
-			id: 1,
-			src: 'https://cdn.shazoo.ru/c440x240/796178_2itKgg3_330421186c2aca9d947c93649d5ad1e604042543.jpg',
-			title: `Акция ${this.id}`,
-			text: `Такой акции вы еще не видели ${this.id}`,
-		}
+		return productsData.find(product => product.id === this.id) // Найти продукт по ID
 	}
 
 	get pageRoot() {
